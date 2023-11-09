@@ -1,5 +1,109 @@
-<div class="grid h-screen place-items-center">
-  <div class="font-bold text-3xl">
-    Fyle Internship Challenge
-  </div>
+<div *ngIf="!user">
+  
+    <ul class="grid gap-4 grid-cols-2 grid-rows-5 m-8">
+      <!-- Placeholder skeleton loading structure -->
+      <li class="border-4 border-gray-200 p-4 animate-pulse">
+        <a class="block h-4 bg-gray-300 rounded w-3/4 my-2"></a>
+        <div class="space-x-1 my-2">
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+        </div>
+      </li>
+      <!-- Placeholder skeleton loading structure -->
+      <li class="border-4 border-gray-200 p-4 animate-pulse">
+        <a class="block h-4 bg-gray-300 rounded w-3/4 my-2"></a>
+        <div class="space-x-1 my-2">
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+        </div>
+      </li>
+      <!-- Placeholder skeleton loading structure -->
+      <li class="border-4 border-gray-200 p-4 animate-pulse">
+        <a class="block h-4 bg-gray-300 rounded w-3/4 my-2"></a>
+        <div class="space-x-1 my-2">
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+        </div>
+      </li>
+      <!-- Placeholder skeleton loading structure -->
+      <li class="border-4 border-gray-200 p-4 animate-pulse">
+        <a class="block h-4 bg-gray-300 rounded w-3/4 my-2"></a>
+        <div class="space-x-1 my-2">
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+        </div>
+      </li>
+      <!-- Placeholder skeleton loading structure -->
+      <li class="border-4 border-gray-200 p-4 animate-pulse">
+        <a class="block h-4 bg-gray-300 rounded w-3/4 my-2"></a>
+        <div class="space-x-1 my-2">
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+          <span class="bg-gray-300 rounded px-3 py-2"></span>
+        </div>
+      </li>
+    </ul>
+    
+  
 </div>
+<div class="content">
+  <span>{{ title }}</span>
+</div>
+
+<div *ngIf="user">
+  <p class="username">{{ user.name }}</p>
+  <p><strong>Location:</strong> {{ user.location }}</p>
+  <p><strong>repos:</strong> {{ user.repos_url }}</p>
+  <!-- Add more properties as needed -->
+</div>
+<div *ngIf="user" >
+<h2>Public Repositories for {{user.name}}</h2>
+<ul class="grid gap-4 grid-cols-2 grid-rows-5 m-8">
+  <li class="border-4 border-slate-950 p-4 " *ngFor="let repo of getPaginatedRepositories()">
+    <a class="block" href="{{ repo.html_url }}" target="_blank">{{ repo.name }} </a>
+    <ng-container *ngIf="hasLanguages(repo.languages); else noLanguage">
+      <ng-container *ngFor="let lang of getLanguageKeys(repo.languages); let last = last">
+        <span class="bg-sky-400	 rounded px-3 py-2 mx-0 my-0">{{ lang }}</span>
+        <ng-container *ngIf="!last">, </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #noLanguage>
+    </ng-template>
+</li>
+</ul>
+</div>
+<div>
+  <button *ngIf="currentPage > 1" (click)="previousPage()">Previous</button>
+  <button *ngIf="getPaginatedRepositories().length === pageSize" (click)="nextPage()">Next</button>
+</div>
+<div class="flex justify-center mt-4">
+  <button
+    *ngIf="currentPage > 1"
+    (click)="previousPage()"
+    class="px-4 py-2 bg-gray-300 text-gray-700 rounded-l-lg hover:bg-gray-400"
+  >
+    Previous
+  </button>
+  <p class="px-4 py-2 bg-gray-300 text-gray-700">{{ currentPage }}</p> <!-- Show current page number -->
+  <button
+    *ngIf="getPaginatedRepositories().length === pageSize"
+    (click)="nextPage()"
+    class="px-4 py-2 bg-gray-300 text-gray-700 rounded-r-lg hover:bg-gray-400"
+  >
+    Next
+  </button>
+</div>
+
+
+
+
+
+
+
+
+
+
